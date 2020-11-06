@@ -1,7 +1,7 @@
 {
-  "name": "eslint-config-blackstone",
+  "name": "@blackstonestudio/eslint-config-blackstone",
   "version": "0.0.1",
-  "description": "",
+  "description": "Blackstone Studio oficial eslint configuration.",
   "main": "src/index.js",
   "bin": {
     "eslint-config-blackstone": "blackstone-eslint-config.js"
@@ -29,7 +29,7 @@
     "eslint",
     "eslintconfig"
   ],
-  "author": "",
+  "author": "blackstonestudio",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/BlackstoneStudio/eslint-config-blackstone/issues"

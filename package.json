@@ -1,0 +1,44 @@
+{
+  "name": "eslint-config-blackstone",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "bin": {
+    "eslint-config-blackstone": "blackstone-eslint-config.js"
+  },
+  "scripts": {
+    "install": "node bin/blackstone-eslint-config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlackstoneStudio/eslint-config-blackstone.git"
+  },
+  "keywords": [
+    "style guide",
+    "lint",
+    "airbnb",
+    "es6",
+    "es2015",
+    "es2016",
+    "es2017",
+    "es2018",
+    "react",
+    "jsx",
+    "jsdoc",
+    "blackstone",
+    "eslint",
+    "eslintconfig"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlackstoneStudio/eslint-config-blackstone/issues"
+  },
+  "homepage": "https://github.com/BlackstoneStudio/eslint-config-blackstone#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}

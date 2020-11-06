@@ -27,9 +27,9 @@ const data = JSON.stringify(config, null, 4);
 dependencyInstallation.on('exit', () => {
   fs.writeFile('.eslintrc', data, (err) => {
     if (err) {
-      process.stdout('There was an error trying to create the eslint config file');
+      process.stdout.write('There was an error trying to create the eslint config file');
     } else {
-      process.stdout('You\'re good to go macho man');
+      process.stdout.write('You\'re good to go macho man');
     }
   });
 });

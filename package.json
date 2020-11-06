@@ -4,7 +4,7 @@
   "description": "Blackstone Studio oficial eslint configuration.",
   "main": "src/index.js",
   "bin": {
-    "eslint-config-blackstone": "blackstone-eslint-config.js"
+    "eslint-config-blackstone": "bin/blackstone-eslint-config.js"
   },
   "scripts": {
     "install": "node bin/blackstone-eslint-config"

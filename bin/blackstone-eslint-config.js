@@ -9,23 +9,24 @@ const config = {
   ],
   rules: {},
 };
-const data = JSON.stringify(config, null, 4);
 
+const data = JSON.stringify(config, null, 4);
+const packages = [
+  'eslint-config-airbnb',
+  'eslint@latest',
+  'eslint-plugin-jsx-a11y@latest',
+  'eslint-plugin-import@latest',
+  'eslint-plugin-react@latest',
+  'eslint-plugin-react-hooks@latest',
+  'eslint-plugin-jsdoc',
+];
 const dependencyInstallation = spawn(
   'npm',
   [
     'install',
     '--save-dev',
-    'eslint-config-airbnb',
-    'eslint@latest',
-    'eslint-plugin-jsx-a11y@latest',
-    'eslint-plugin-import@latest',
-    'eslint-plugin-react@latest',
-    'eslint-plugin-react-hooks@latest',
-    'eslint-plugin-jsdoc',
-  ],
+  ].concat(packages),
 );
-
 dependencyInstallation.stdout.pipe(process.stdout);
 dependencyInstallation.stderr.pipe(process.stdout);
 

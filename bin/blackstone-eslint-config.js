@@ -23,7 +23,6 @@ const dependencyInstallation = spawn(
     'eslint-plugin-react@latest',
     'eslint-plugin-react-hooks@latest',
     'eslint-plugin-jsdoc',
-    '@blackstonestudio/eslint-config-blackstone',
   ],
 );
 

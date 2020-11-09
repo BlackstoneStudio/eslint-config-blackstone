@@ -1,54 +1,78 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
 const { spawn } = require('child_process');
 
-const config = {
-  env: {
-    browser: true,
-    node: true,
-  },
-  extends: [
-    '@blackstonestudio/eslint-config-blackstone',
-    'airbnb',
+const { argv } = yargs(hideBin(process.argv));
+if (argv.frontend || argv.backend) {
+  const config = {
+    env: {
+      browser: argv.frontend,
+      node: !argv.frontend,
+      es6: argv.frontend,
+    },
+    extends: [
+      '@blackstonestudio/eslint-config-blackstone',
+      'airbnb',
+      'plugin:jsdoc/recommended',
+    ],
+    plugins: [
+      'jsdoc',
+    ],
+  };
+  const extraEslintRules = [
     'plugin:react/recommended',
-    'plugin:jsdoc/recommended',
-  ],
-  plugins: [
+  ];
+  const extraPlugins = [
     'react',
     'react-hooks',
-    'jsdoc',
-  ],
-};
+  ];
 
-const packages = [
-  '@blackstonestudio/eslint-config-blackstone',
-  'eslint',
-  'eslint-config-airbnb',
-  'eslint-plugin-import',
-  'eslint-plugin-jsdoc',
-  'eslint-plugin-jsx-a11y',
-  'eslint-plugin-react',
-  'eslint-plugin-react-hooks',
-];
-
-const depInstall = spawn('npm', [
-  'i',
-  '--save-dev',
-].concat(packages),
-{ stdio: 'inherit' });
-
-const data = JSON.stringify(config, null, 4);
-depInstall.on('error', () => {
-  process.stdout.write('An error ocurred while installing\n');
-});
-
-depInstall.on('exit', () => {
-  fs.writeFile('.eslintrc', data, (err) => {
-    if (err) {
-      process.stdout.write('There was an error trying to create the eslint config file\n');
-    } else {
-      process.stdout.write('You\'re good to go macho man\n');
-    }
+  const basePkg = [
+    '@blackstonestudio/eslint-config-blackstone',
+    'eslint',
+    'eslint-config-airbnb',
+    'eslint-plugin-jsdoc',
+  ];
+  const frontPkg = [
+    'eslint-plugin-import',
+    'eslint-plugin-jsdoc',
+    'eslint-plugin-jsx-a11y',
+    'eslint-plugin-react',
+    'eslint-plugin-react-hooks',
+  ];
+  if (argv.frontend) {
+    basePkg.concat(frontPkg);
+    config.extends.concat(extraEslintRules);
+    config.plugins.concat(extraPlugins);
+  }
+  const data = JSON.stringify(config, null, 4);
+  const writeFile = () => new Promise((res, rej) => {
+    fs.writeFile('.eslintrc', data, (err) => {
+      if (err) {
+        rej(new Error('There was an error trying to create the eslint config file\n'));
+      } else {
+        res('You\'re good to go macho man\n');
+      }
+    });
   });
-});
+  const depInstall = spawn('npm', [
+    'i',
+    '--save-dev',
+  ].concat(basePkg),
+  { stdio: 'inherit' });
+
+  depInstall.on('error', () => {
+    process.stdout.write('An error ocurred while installing\n');
+  });
+
+  depInstall.on('exit', () => {
+    writeFile()
+      .then(process.stdout.write)
+      .catch(process.stderr.write);
+  });
+} else {
+  process.stderr.write('Required arguments\n');
+}

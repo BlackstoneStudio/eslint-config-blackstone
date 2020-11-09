@@ -45,8 +45,8 @@ if (argv.frontend || argv.backend) {
   ];
   if (argv.frontend) {
     basePkg.push(frontPkg);
-    config.extends.concat(extraEslintRules);
-    config.plugins.concat(extraPlugins);
+    config.extends.push(extraEslintRules);
+    config.plugins.push(extraPlugins);
   }
   const data = JSON.stringify(config, null, 4);
   const writeFile = () => new Promise((res, rej) => {

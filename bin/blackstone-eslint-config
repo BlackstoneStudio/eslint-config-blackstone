@@ -44,7 +44,7 @@ if (argv.frontend || argv.backend) {
     'eslint-plugin-react-hooks',
   ];
   if (argv.frontend) {
-    basePkg.concat(frontPkg);
+    basePkg.push(frontPkg);
     config.extends.concat(extraEslintRules);
     config.plugins.concat(extraPlugins);
   }

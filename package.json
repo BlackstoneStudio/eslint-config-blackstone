@@ -2,7 +2,7 @@
   "name": "@blackstonestudio/eslint-config-blackstone",
   "version": "0.2.4",
   "description": "Blackstone Studio oficial eslint configuration.",
-  "main": "./src/index.js",
+  "main": "index.js",
   "bin": {
     "eslint-config-blackstone": "./bin/blackstone-eslint-config"
   },

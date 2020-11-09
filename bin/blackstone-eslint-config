@@ -6,7 +6,6 @@ const config = {
   extends: [
     '@blackstonestudio/eslint-config-blackstone',
   ],
-  rules: {},
 };
 const data = JSON.stringify(config, null, 4);
 fs.writeFile('.eslintrc', data, (err) => {

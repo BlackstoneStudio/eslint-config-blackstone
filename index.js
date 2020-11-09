@@ -1,3 +1,3 @@
-const main = require('./src/.eslintrc');
+const main = require('./src/main');
 
 module.exports = main;

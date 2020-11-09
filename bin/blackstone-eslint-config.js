@@ -20,6 +20,7 @@ const packages = [
   'eslint-plugin-react-hooks@latest',
   'eslint-plugin-jsdoc',
 ];
+
 const dependencyInstallation = spawn(
   'npm',
   [
@@ -29,7 +30,7 @@ const dependencyInstallation = spawn(
 );
 dependencyInstallation.stdout.pipe(process.stdout);
 dependencyInstallation.stderr.pipe(process.stdout);
-
+process.stdout.write('Installing deps, it will take a second...');
 dependencyInstallation.on('exit', (code) => {
   if (code !== 1) {
     fs.writeFile('.eslintrc', data, (err) => {

@@ -71,8 +71,8 @@ if (argv.frontend || argv.backend) {
 
   depInstall.on('exit', () => {
     writeFile()
-      .then(process.stdout.write)
-      .catch(process.stderr.write);
+      .then((res) => process.stdout.write(`${res}\n`))
+      .catch((rej) => process.stderr.write(`${rej}\n`));
   });
 } else {
   process.stderr.write('Required arguments\n');

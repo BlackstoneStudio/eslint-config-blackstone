@@ -5,7 +5,7 @@ const { spawn } = require('child_process');
 
 const config = {
   extends: [
-    'eslint-config-blackstone',
+    '@blackstonestudio/eslint-config-blackstone',
   ],
   rules: {},
 };

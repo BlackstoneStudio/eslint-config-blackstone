@@ -32,7 +32,6 @@
     "url": "https://github.com/BlackstoneStudio/eslint-config-blackstone/issues"
   },
   "homepage": "https://github.com/BlackstoneStudio/eslint-config-blackstone#readme",
-  "dependencies": {},
   "devDependencies": {
     "eslint": "^7.12.1",
     "eslint-config-airbnb": "^18.2.1",
@@ -43,7 +42,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0"
   },
-  "peerDependencies": {
+  "dependencies": {
     "eslint": "^7.12.1",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",

@@ -7,7 +7,7 @@ const { spawn } = require('child_process');
 
 const { argv } = yargs(hideBin(process.argv));
 if (argv.frontend || argv.backend) {
-  let config = {
+  const config = {
     env: {
       browser: argv.frontend,
       node: !argv.frontend,
@@ -44,9 +44,9 @@ if (argv.frontend || argv.backend) {
     'eslint-plugin-react-hooks',
   ];
   if (argv.frontend) {
-    basePkg = basePkg.concat(frontPkg);
-    config = config.extends.concat(extraEslintRules);
-    config = config.plugins.concat(extraPlugins);
+    basePkg = [...basePkg, ...frontPkg];
+    config.extends = [...config.extends, ...extraEslintRules];
+    config.plugins = [...config.plugins, ...extraPlugins];
   }
   const data = JSON.stringify(config, null, 4);
   const writeFile = () => new Promise((res, rej) => {

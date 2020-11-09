@@ -13,6 +13,7 @@ const config = {
 const data = JSON.stringify(config, null, 4);
 const packages = [
   'eslint-config-airbnb',
+  'eslint-config-airbnb-base@14.2.0',
   'eslint@latest',
   'eslint-plugin-jsx-a11y@latest',
   'eslint-plugin-import@latest',

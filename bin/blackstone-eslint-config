@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+
+const config = {
+  extends: [
+    '@blackstonestudio/eslint-config-blackstone',
+  ],
+  rules: {},
+};
+const data = JSON.stringify(config, null, 4);
+fs.writeFile('.eslintrc', data, (err) => {
+  if (err) {
+    process.stdout.write('There was an error trying to create the eslint config file\n');
+  } else {
+    process.stdout.write('You\'re good to go macho man\n');
+  }
+});

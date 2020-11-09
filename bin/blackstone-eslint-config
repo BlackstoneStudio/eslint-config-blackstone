@@ -22,6 +22,7 @@ const config = {
 };
 
 const packages = [
+  '@blackstonestudio/eslint-config-blackstone',
   'eslint',
   'eslint-config-airbnb',
   'eslint-plugin-import',

@@ -1,17 +1,49 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const { spawn } = require('child_process');
 
 const config = {
   extends: [
     '@blackstonestudio/eslint-config-blackstone',
+    'airbnb',
+    'plugin:react/recommended',
+    'plugin:jsdoc/recommended',
+  ],
+  plugins: [
+    'react',
+    'react-hooks',
+    'jsdoc',
   ],
 };
+
+const packages = [
+  'eslint',
+  'eslint-config-airbnb',
+  'eslint-plugin-import',
+  'eslint-plugin-jsdoc',
+  'eslint-plugin-jsx-a11y',
+  'eslint-plugin-react',
+  'eslint-plugin-react-hooks',
+];
+
+const depInstall = spawn('npm', [
+  'i',
+  '--save-dev',
+].concat(packages),
+{ stdio: 'inherit' });
+
 const data = JSON.stringify(config, null, 4);
-fs.writeFile('.eslintrc', data, (err) => {
-  if (err) {
-    process.stdout.write('There was an error trying to create the eslint config file\n');
-  } else {
-    process.stdout.write('You\'re good to go macho man\n');
-  }
+depInstall.on('exit', () => {
+  process.stdout.write('An error ocurred while installing');
+});
+
+depInstall.on('exit', () => {
+  fs.writeFile('.eslintrc', data, (err) => {
+    if (err) {
+      process.stdout.write('There was an error trying to create the eslint config file\n');
+    } else {
+      process.stdout.write('You\'re good to go macho man\n');
+    }
+  });
 });

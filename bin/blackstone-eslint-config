@@ -38,8 +38,8 @@ const depInstall = spawn('npm', [
 { stdio: 'inherit' });
 
 const data = JSON.stringify(config, null, 4);
-depInstall.on('exit', () => {
-  process.stdout.write('An error ocurred while installing');
+depInstall.on('error', () => {
+  process.stdout.write('An error ocurred while installing\n');
 });
 
 depInstall.on('exit', () => {

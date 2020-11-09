@@ -52,8 +52,7 @@ if (argv.frontend || argv.backend) {
   const writeFile = () => new Promise((res, rej) => {
     fs.writeFile('.eslintrc', data, (err) => {
       if (err) {
-        rej(new Error('There was an error trying to create the eslint config file\n')
-          .message);
+        rej(new Error('There was an error trying to create the eslint config file\n'));
       } else {
         res('You\'re good to go macho man\n');
       }
@@ -69,10 +68,13 @@ if (argv.frontend || argv.backend) {
     process.stdout.write('An error ocurred while installing\n');
   });
 
-  depInstall.on('exit', () => {
-    writeFile()
-      .then((res) => process.stdout.write(`${res}\n`))
-      .catch((rej) => process.stderr.write(`${rej}\n`));
+  depInstall.on('exit', async () => {
+    try {
+      const res = await writeFile();
+      process.stdout.write(res);
+    } catch (e) {
+      process.stderr.write(e.message);
+    }
   });
 } else {
   process.stderr.write('Required arguments\n');

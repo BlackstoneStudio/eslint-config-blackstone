@@ -6,9 +6,6 @@
   "bin": {
     "eslint-config-blackstone": "./bin/blackstone-eslint-config"
   },
-  "scripts": {
-    "install": "node bin/blackstone-eslint-config"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BlackstoneStudio/eslint-config-blackstone.git"

@@ -1,6 +1,6 @@
 # eslint-config-blackstone
 
-This Blackstone's official cli tool and eslint config for javascript and typescript proyects
+This is Blackstone's official cli tool and eslint config for javascript and typescript proyects
 ### Installation
 ⚠️ **Please make sure your project doesn't have any eslint packages or .eslintrc already installed.**
 

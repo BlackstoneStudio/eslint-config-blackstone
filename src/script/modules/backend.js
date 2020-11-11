@@ -9,7 +9,6 @@ const eslintconfig = {
     'airbnb/base',
     '@blackstonestudio/eslint-config-blackstone',
   ],
-  parser: 'babel-eslint',
 };
 
 const dependencies = [];

@@ -14,11 +14,9 @@ const eslintconfig = {
     'react',
     'react-hooks',
   ],
-  parser: 'babel-eslint',
 };
 
 const dependencies = [
-  'eslint-plugin-import',
   'eslint-plugin-jsx-a11y',
   'eslint-plugin-react',
   'eslint-plugin-react-hooks',

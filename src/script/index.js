@@ -1,108 +1,100 @@
-#!/usr/bin/env node
-
-const fs = require('fs');
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
-const { spawn } = require('child_process');
 const { prompt } = require('enquirer');
+const chalk = require('chalk');
 
-const bases = require('./modules/base');
+const base = require('./modules/base');
 const frontend = require('./modules/frontend');
+const backend = require('./modules/backend');
 const typescript = require('./modules/typescript');
 
 const { eslintconfigSetup, dependenciesSetup } = require('./utils/setup');
-const base = require('./modules/base');
+const nestjs = require('./modules/nestjs');
+const depsInstall = require('./utils/depsInstall');
+const writeFile = require('./utils/writeFile');
 
-const buildup = async () => {
-  const response = await prompt([
-    {
-      name: 'isFrontend',
-      message: 'What kind of project are you running?\n',
-      type: 'toggle',
-      enabled: 'Frontend',
-      disabled: 'Backend',
-    },
-    {
-      name: 'isTypescript',
-      message: 'Is your project Typescript?\n',
-      type: 'toggle',
-      enabled: 'Yes',
-      disabled: 'No',
-    },
-    {
-      name: 'usesNest',
-      message: 'Does your project run on Nest.js?\n',
-      type: 'toggle',
-      enabled: 'Yes',
-      disabled: 'No',
-      skip() {
-        return this.state.answers.isFrontend || !this.state.answers.isTypescript;
+module.exports = async () => {
+  try {
+    const response = await prompt([
+      {
+        name: 'isFrontend',
+        message: 'What kind of project are you running?\n',
+        type: 'toggle',
+        enabled: 'Frontend (React, React Native...)',
+        disabled: 'Backend (Node, Express, NestJS...)',
       },
-    },
-  ]);
+      {
+        name: 'isTypescript',
+        message: 'Is your project Typescript?\n',
+        type: 'toggle',
+        enabled: 'Yes',
+        disabled: 'No',
+      },
+      {
+        name: 'usesNest',
+        message: 'Does your project run on Nest.js?\n',
+        type: 'toggle',
+        enabled: 'Yes',
+        disabled: 'No',
+        skip() {
+          return this.state.answers.isFrontend || !this.state.answers.isTypescript;
+        },
+      },
+    ]);
 
-  let baseConfig = bases.eslintconfig;
-  let baseDependencies = bases.dependencies;
+    let baseConfig = base.eslintconfig;
+    let baseDependencies = base.dependencies;
 
-  if (response.isFrontend) {
-    baseConfig = eslintconfigSetup(
-      baseConfig,
-      frontend,
-    );
-    baseDependencies = dependenciesSetup(
-      baseDependencies,
-      frontend,
-    );
-  }
-
-  if (response.isTypescript) {
-    baseConfig = eslintconfigSetup(
-      baseConfig,
-      typescript,
-    );
-    baseDependencies = dependenciesSetup(
-      baseDependencies,
-      typescript,
-    );
-  }
-
-  console.log({
-    '.eslintrc': baseConfig,
-    dependencies: baseDependencies,
-  });
-};
-module.exports = buildup;
-
-/*
-
-  const data = JSON.stringify(config, null, 4);
-  const writeFile = () => new Promise((res, rej) => {
-    fs.writeFile('.eslintrc', data, (err) => {
-      if (err) {
-        rej(new Error('There was an error trying to create the eslint config file\n'));
-      } else {
-        res('You\'re good to go macho man\n');
-      }
-    });
-  });
-  const depInstall = spawn('npm', [
-    'i',
-    '--save-dev',
-  ].concat(basePkg),
-  { stdio: 'inherit' });
-
-  depInstall.on('error', () => {
-    process.stdout.write('An error ocurred while installing\n');
-  });
-
-  depInstall.on('exit', async () => {
-    try {
-      const res = await writeFile();
-      process.stdout.write(res);
-    } catch (e) {
-      process.stderr.write(e.message);
+    if (response.isFrontend) {
+      baseConfig = eslintconfigSetup(
+        baseConfig,
+        frontend,
+      );
+      baseDependencies = dependenciesSetup(
+        baseDependencies,
+        frontend,
+      );
+    } else {
+      baseConfig = eslintconfigSetup(
+        baseConfig,
+        backend,
+      );
+      baseDependencies = dependenciesSetup(
+        baseDependencies,
+        backend,
+      );
     }
-  });
-} else {
-  process.stderr.write('Required arguments\n');
-} */
+    if (response.isTypescript) {
+      baseConfig = eslintconfigSetup(
+        baseConfig,
+        typescript,
+      );
+      baseDependencies = dependenciesSetup(
+        baseDependencies,
+        typescript,
+      );
+    }
+    if (response.usesNest) {
+      baseConfig = eslintconfigSetup(
+        baseConfig,
+        nestjs,
+      );
+      baseDependencies = dependenciesSetup(
+        baseDependencies,
+        nestjs,
+      );
+    }
+    const eslintrc = JSON.stringify(baseConfig, null, 4);
+    process.stdout.write(chalk.green.bold('Have it your way cap\'n...'));
+    await depsInstall(baseDependencies);
+    process.stdout.write(chalk.yellow.bold('Deps installed, creating .eslintrc...\n'));
+    const message = await writeFile(eslintrc);
+    process.stdout.write(chalk.green.bold(`${message}\n`));
+    process.exit(0);
+  } catch (e) {
+    if (!e) {
+      process.stdout.write(chalk.red.bold('You must finish the setup!\n'));
+    } else {
+      process.stdout.write(chalk.red.bold(`${e.message}\n`));
+    }
+    process.exit(1);
+  }
+};

@@ -6,7 +6,7 @@ const eslintconfig = {
     es2020: true,
   },
   extends: [
-    '@blackstonestudio/eslint-config-blackstone',
+    '@blackstonestudio/eslint-config-blackstone/frontend',
     'airbnb',
     'plugin:react/recommended',
   ],

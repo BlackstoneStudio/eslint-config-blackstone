@@ -15,6 +15,11 @@ const eslintconfigSetup = (baseconfig, implemented) => {
         case 'object':
           if (Array.isArray(implemented.eslintconfig[property])) {
             config[property] = config[property].concat(implemented.eslintconfig[property]);
+          } else {
+            config[property] = Object.assign(
+              implemented.eslintconfig[property],
+              config[property],
+            );
           }
           break;
         default:

@@ -1,6 +1,6 @@
 {
   "name": "@blackstonestudio/eslint-config-blackstone",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Blackstone Studio oficial eslint configuration.",
   "main": "index.js",
   "bin": {

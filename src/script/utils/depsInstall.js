@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 module.exports = (deps) => new Promise((res, rej) => {
   const installation = spawn('npm', [
     'i',
-    '--save.dev',
+    '--save-dev',
   ].concat(deps),
   { stdio: 'inherit' });
   installation.on('error', rej);
